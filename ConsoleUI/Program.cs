@@ -1,4 +1,6 @@
 ﻿using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
@@ -9,32 +11,30 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new InMemoryCarDal());
+            CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
+            Console.WriteLine("---------------Brand'a Göre geldi--------------------------------");
+            foreach (var cars in carManager.GetAllByBrandId(2))
             {
-                Console.WriteLine(car.Description);
+                Console.WriteLine(cars.Description);
             }
-            Console.WriteLine("------------------------------------------");
-            //Araba Ekliyoruz
-            carManager.Add(new Car {Id=8,BrandId=4,ColorId=4,DailyPrice=400,Description="Yeni Araba",ModelYear=1988 });
-            foreach (var car in carManager.GetAll())
+            Console.WriteLine("-------------------Color'a Göre Geldi----------------------------");
+            foreach (var cars in carManager.GetAllByColorId(1))
             {
-                Console.WriteLine(car.Description);
+                Console.WriteLine(cars.Description);
             }
-            Console.WriteLine(  "------------------------------------------------");
-            carManager.Delete(3);
-            //Ikea silindi
-            foreach (var car in carManager.GetAll())
+            Console.WriteLine("-------------------Komple Geldi----------------------------");
+            foreach (var cars in carManager.GetAll())
             {
-                Console.WriteLine(car.Description);
+                Console.WriteLine(cars.Description);
             }
-            Console.WriteLine("------------------------------------------------");
-            //Yeni Araba nın acıklaması yeni olmayan şeklinde değişti
-            carManager.Update(new Car { Id = 8, BrandId = 4, ColorId = 4, DailyPrice = 400, Description = "Yeni Olmayan", ModelYear = 1988 });
-            foreach (var car in carManager.GetAll())
+
+            Car car1 = new Car {Id=5,BrandId=1,ColorId=2,DailyPrice=150,ModelYear=1987,Description="" };
+            carManager.Add(car1);
+            Console.WriteLine("-------------------Eklenmediğinden Eskisi gibi geldi Çünkü Description en az 2 uzunluğunda olmalıydı----------------------------");
+            foreach (var cars in carManager.GetAll())
             {
-                Console.WriteLine(car.Description);
+                Console.WriteLine(cars.Description);
             }
         }
     }
