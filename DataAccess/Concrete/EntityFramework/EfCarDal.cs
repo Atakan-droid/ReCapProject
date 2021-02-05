@@ -28,6 +28,10 @@ namespace DataAccess.Concrete.EntityFramework
                 var deleteCar = context.Entry(entity);
                 deleteCar.State = EntityState.Deleted;
                 context.SaveChanges();
+                // yada 
+
+                context.Car.Remove(context.Car.SingleOrDefault(p => p.Id == entity.Id));
+                context.SaveChanges();
             }
         }
 
@@ -52,8 +56,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentContext context = new CarRentContext())
             {
-                var updateCar = context.Entry(entity);
-                updateCar.State = EntityState.Modified;
+                var updateCar = context.Car.SingleOrDefault(p => p.Id == entity.Id);
+                updateCar.DailyPrice = entity.DailyPrice;
+                updateCar.Description = entity.Description;
                 context.SaveChanges();
             }
         }

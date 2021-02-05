@@ -6,6 +6,9 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
+    // sınırlandırdık
+    // T sadece class ve IEntitiy üyesi olabilir
+    //IEntity interface olduğundna new lenemez yani sadece ona bağlı olan classlar gelebilir.
    public interface IEntityRepository<T> where T:class,IEntity,new()
     {
         List<T> GetAll(Expression<Func<T, bool>> filter=null);
