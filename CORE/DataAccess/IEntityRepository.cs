@@ -1,10 +1,11 @@
-﻿using Entities.Abstract;
+﻿
+using CORE.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace DataAccess.Abstract
+namespace CORE.DataAccess
 {
     // sınırlandırdık
     // T sadece class ve IEntitiy üyesi olabilir

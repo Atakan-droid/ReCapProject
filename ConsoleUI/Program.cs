@@ -36,6 +36,13 @@ namespace ConsoleUI
             {
                 Console.WriteLine(cars.Description);
             }
+
+            Console.WriteLine("-------------------Tablolar Birleşti / Hepsi geldi ----------------------------");
+
+            foreach (var cars in carManager.GetAllDetails())
+            {
+                Console.WriteLine(cars.BrandName+" markasında "+cars.ColorName +" renginde"+cars.Description +" bir araba");
+            }
         }
     }
 }
