@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager : ICarService
+    public class CarManager : IBusinessService<Car>
     {
         ICarDal _carDal;
 
@@ -30,7 +30,10 @@ namespace Business.Concrete
             }
         }
 
-
+        public void Delete(Car car)
+        {
+            _carDal.Delete(car);
+        }
 
         public List<Car> GetAll()
         {
@@ -50,6 +53,16 @@ namespace Business.Concrete
         public List<CarDTOs> GetAllDetails()
         {
             return _carDal.GetAllDetails();
+        }
+
+        public Car GetById(int Id)
+        {
+            return _carDal.Get(p=>p.Id==Id);
+        }
+
+        public void Update(Car car)
+        {
+            _carDal.Update(car);
         }
     }
 }
