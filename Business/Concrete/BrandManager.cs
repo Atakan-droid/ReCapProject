@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using CORE.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -30,6 +31,31 @@ namespace Business.Concrete
         }
 
         public void Update(Brand brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IBusinessService<Brand>.Add(Brand brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IBusinessService<Brand>.Delete(Brand brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDataResult<List<Brand>> IBusinessService<Brand>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        IDataResult<Brand> IBusinessService<Brand>.GetById(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IBusinessService<Brand>.Update(Brand brand)
         {
             throw new NotImplementedException();
         }

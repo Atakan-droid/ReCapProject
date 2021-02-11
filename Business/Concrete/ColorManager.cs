@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using CORE.Utilities;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,31 @@ namespace Business.Concrete
         }
 
         public void Update(Color brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IBusinessService<Color>.Add(Color brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IBusinessService<Color>.Delete(Color brand)
+        {
+            throw new NotImplementedException();
+        }
+
+        IDataResult<List<Color>> IBusinessService<Color>.GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        IDataResult<Color> IBusinessService<Color>.GetById(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        IResult IBusinessService<Color>.Update(Color brand)
         {
             throw new NotImplementedException();
         }
