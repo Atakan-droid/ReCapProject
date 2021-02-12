@@ -18,7 +18,8 @@ namespace Business.Concrete
         }
         public IResult Add(Customer entity)
         {
-            throw new NotImplementedException();
+            customerDal.Add(entity);
+            return new SuccessResult();
         }
 
         public IResult Delete(Customer entity)

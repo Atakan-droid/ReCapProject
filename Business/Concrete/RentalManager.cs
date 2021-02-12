@@ -19,15 +19,10 @@ namespace Business.Concrete
         }
         public IResult Add(Rentals entity)
         {
-            if (entity.RentDate!=null) 
-            {
-                return new ErrorResult(Messages.RentalAddFail);
-            } 
-            else {
+           
                 rentalDal.Add(entity);
                 return new SuccessResult("Başarılı bir şekilde eklendi");
-            }
-
+           
         }
 
         public IResult Delete(Rentals entity)

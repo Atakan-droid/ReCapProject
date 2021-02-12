@@ -16,7 +16,7 @@ namespace ConsoleUI
             UserManager userManager = new UserManager(new EfUserDal());
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
-            User user1 = new User() {Id=6,FirstName="Hasan",LastName="Mustan",Email="hasan@gmail.com",Password="1234" };
+            User user1 = new User() {Id=6,FirstName="Hasan",LastName="Mustan",Email="hasan@gmail.com",Password="123" };
 
              userManager.Add(user1);
             if (userManager.Add(user1).Success == true)
@@ -47,22 +47,12 @@ namespace ConsoleUI
                 }
              
             }
+         
+
             Console.WriteLine( "-----------------------------------");
 
-            Rentals rental1 = new Rentals() {Id=3,CarId=1,CustomerId=1,RentDate=DateTime.Now};
-            Rentals rental2 = new Rentals() { Id = 4, CarId = 2, CustomerId = 2, RentDate = DateTime.Now ,ReturnDate=DateTime.Today};
-            rentalManager.Add(rental1);
-            if (rentalManager.Add(rental1).Success == true)
-            {
-                Console.WriteLine(rentalManager.Add(rental1).Message);
-            }
-            else { Console.WriteLine(rentalManager.Add(rental1).Message); }
-
-            if (rentalManager.Add(rental2).Success == true)
-            {
-                Console.WriteLine(rentalManager.Add(rental2).Message);
-            }
-            else { Console.WriteLine(rentalManager.Add(rental2).Message); }
+           
+            
 
             Console.WriteLine("---------------------------------------------------");
             foreach (var rents in rentalManager.GetRentDetail().Data)
