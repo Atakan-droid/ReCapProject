@@ -66,6 +66,7 @@ namespace Business.Concrete
         public IDataResult<List<CarDTOs>> GetAllDetails()
         {
             if (DateTime.Now.Hour == 21) { return new ErrorDataResult<List<CarDTOs>>(_carDal.GetAllDetails(), "Hatalı liste"); };
+
             return new SuccessDataResult<List<CarDTOs>>(_carDal.GetAllDetails(),"Tüm detaylar listlendi");
         }
 

@@ -10,8 +10,8 @@ namespace Business.Abstract
     {
         IDataResult<List<T>> GetAll();
         IDataResult<T> GetById(int Id);
-        IResult Add(T brand);
-        IResult Delete(T brand);
-        IResult Update(T brand);
+        IResult Add(T entity);
+        IResult Delete(T entity);
+        IResult Update(T entity);
     }
 }
