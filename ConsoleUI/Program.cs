@@ -48,10 +48,19 @@ namespace ConsoleUI
                 }
              
             }
-          //  Rentals rental1 = new Rentals() { Id = 8, CarId = 5, CustomerId = 4, RentDate = DateTime.Now };
+         // Rentals rental1 = new Rentals { Id = 12, CarId = 4, CustomerId = 3, RentDate =DateTime.Now};
            // rentalManager.Add(rental1);
-            
 
+            Console.WriteLine("---------------------------------------------");
+
+            rentalManager.RentalBack(10);
+            if (rentalManager.RentalBack(10).Success == true)
+            {
+                Console.WriteLine(rentalManager.RentalBack(10).Message);
+            }
+         
+
+   
             Console.WriteLine( "-----------------------------------");
 
 

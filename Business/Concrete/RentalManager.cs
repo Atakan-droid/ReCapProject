@@ -47,8 +47,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rents_Cars_CustomersDTOs>>(rentalDal.GetDetails(),Messages.RentalListed);
         }
 
+        public IResult RentalBack (int Id)
+        {
+            var result = rentalDal.Get(p => p.Id==Id);
+            result.ReturnDate = DateTime.Now;
+            rentalDal.Update(result);
+            return new SuccessResult(Messages.RentalBackSuccess);
+        }
+
         public IResult Update(Rentals entity)
         {
+            rentalDal.Update(entity);
             return new SuccessResult("Başarılı bir şekilde güncellendi");
         }
     }

@@ -18,6 +18,7 @@ namespace Business.Constants
         public static string RentalAddFail = "Kiralanmadığından eklenemez.";
         public static string RentalListed = "Başarılı bir şekilde listelendi";
         public static string RentalListedById = "Id ye göre listelendi";
+        public static string RentalBackSuccess = "Başarılı bir şekilde teslim edildi";
 
     }
 }

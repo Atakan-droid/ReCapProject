@@ -10,5 +10,6 @@ namespace Business.Abstract
    public interface IRentalService:IBusinessService<Rentals>
     {
         IDataResult<List<Rents_Cars_CustomersDTOs>> GetRentDetail();
+        IResult RentalBack (int Id);
     }
 }
