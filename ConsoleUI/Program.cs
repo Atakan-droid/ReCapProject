@@ -35,8 +35,9 @@ namespace ConsoleUI
                     Console.WriteLine(users.UserName+" "+users.UserLastName+" "+users.UserEmail+" mailine sahip"+" "+users.UserCompanyName+" şiketinde çalışıyor" );
                 }
             }
-           
 
+           //Customer customer1 = new Customer() { Id = 9, UserId = 1, CompanyName = "Deneme şirketi 4" };
+           // customerManager.Add(customer1);
             Console.WriteLine("------------------------------");
             customerManager.GetAll();
             if (customerManager.GetAll().Success == true)
@@ -47,20 +48,20 @@ namespace ConsoleUI
                 }
              
             }
-         
+          //  Rentals rental1 = new Rentals() { Id = 8, CarId = 5, CustomerId = 4, RentDate = DateTime.Now };
+           // rentalManager.Add(rental1);
+            
 
             Console.WriteLine( "-----------------------------------");
 
-           
-            
 
-            Console.WriteLine("---------------------------------------------------");
-            foreach (var rents in rentalManager.GetRentDetail().Data)
+        
+            foreach (var rent in rentalManager.GetRentDetail().Data)
             {
-                Console.WriteLine("{0} kişisi {1} adında bir arabayı {2} tarihinde kiraladı",rents.CustomerName,rents.CarName,rents.RentDate  );
+                Console.WriteLine("{0} kişisi {1} arabasını {2} tarihinde kiraladı",rent.CustomerName,rent.CarName,rent.RentDate);
             }
-            Console.WriteLine();
 
+           
 
         }
 
