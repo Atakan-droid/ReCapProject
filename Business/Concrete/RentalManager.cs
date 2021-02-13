@@ -19,16 +19,23 @@ namespace Business.Concrete
         }
         public IResult Add(Rentals entity)
         {
-           
+            if (entity.RentDate == null)
+            {
+                return new ErrorResult(Messages.RentalAddFail);
+            }
+            else
+            {
                 rentalDal.Add(entity);
                 return new SuccessResult("Başarılı bir şekilde eklendi");
+            };
            
         }
 
         public IResult Delete(Rentals entity)
         {
 
-            return new SuccessResult("Başarılı bir şekilde silindi");
+            rentalDal.Delete(entity);
+            return new SuccessResult();
            
         }
 
@@ -57,8 +64,15 @@ namespace Business.Concrete
 
         public IResult Update(Rentals entity)
         {
+            if (entity.ReturnDate == null)
+            {
             rentalDal.Update(entity);
             return new SuccessResult("Başarılı bir şekilde güncellendi");
+            }else
+            {
+                return new ErrorResult(Messages.RentalUpdateFail);
+            }
+           
         }
     }
 }

@@ -10,34 +10,16 @@ namespace Business.Concrete
 {
     public class BrandManager : IBusinessService<Brand>
     {
-        public void Add(Brand brand)
+        IBrandDal _brandDal;
+        public BrandManager(IBrandDal brandDal)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Brand brand)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Brand> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Brand GetById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Brand brand)
-        {
-            throw new NotImplementedException();
+            _brandDal = brandDal;
         }
 
         IResult IBusinessService<Brand>.Add(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Add(brand);
+            return new SuccessResult();
         }
 
         IResult IBusinessService<Brand>.Delete(Brand brand)
