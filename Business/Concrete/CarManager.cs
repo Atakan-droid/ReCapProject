@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class CarManager : IBusinessService<Car>
+    public class CarManager : ICarService
     {
         ICarDal _carDal;
 
@@ -50,7 +50,7 @@ namespace Business.Concrete
         public IDataResult<List<Car>> GetAll()
         {
             
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.AllDatasError);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),"Başarıyla Listelendi");
         }
 
         public IDataResult<List<Car>> GetAllByBrandId(int id)

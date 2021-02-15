@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class BrandManager : IBusinessService<Brand>
+    public class BrandManager : IBrandService
     {
         IBrandDal _brandDal;
         public BrandManager(IBrandDal brandDal)
@@ -24,22 +24,26 @@ namespace Business.Concrete
 
         IResult IBusinessService<Brand>.Delete(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Delete(brand);
+            return new SuccessResult();
         }
 
         IDataResult<List<Brand>> IBusinessService<Brand>.GetAll()
         {
-            throw new NotImplementedException();
+
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),"Tüm Brand'lar getirildi");
         }
 
         IDataResult<Brand> IBusinessService<Brand>.GetById(int Id)
         {
-            throw new NotImplementedException();
+            
+            return new SuccessDataResult<Brand>(_brandDal.Get(p => p.Id == Id),"Id ye göre getirildi");
         }
 
         IResult IBusinessService<Brand>.Update(Brand brand)
         {
-            throw new NotImplementedException();
+            _brandDal.Update(brand);
+            return new SuccessResult();
         }
     }
 }

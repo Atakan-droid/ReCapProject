@@ -31,12 +31,13 @@ namespace Business.Concrete
 
         public IResult Delete(User entity)
         {
-            throw new NotImplementedException();
+            userDal.Delete(entity);
+            return new SuccessResult();
         }
 
         public IDataResult<List<User>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<User>>(userDal.GetAll(),"Tüm kullanıcılar listelendi");
         }
 
         public IDataResult<List<User_CustomerDTOs>> GetAllDetails()
@@ -51,7 +52,8 @@ namespace Business.Concrete
 
         public IResult Update(User entity)
         {
-            throw new NotImplementedException();
+            userDal.Update(entity);
+            return new SuccessResult();
         }
     }
 }

@@ -7,56 +7,40 @@ using System.Text;
 
 namespace Business.Concrete
 {
-    public class ColorManager : IBusinessService<Color>
+    public class ColorManager :IColorService
     {
-        public void Add(Color brand)
+        IColorService _colorService;
+        public ColorManager(IColorService colorService)
+        {
+            _colorService = colorService;
+        }
+
+        public IResult Add(Color entity)
+        {
+            _colorService.Add(entity);
+            return new SuccessResult();
+        }
+
+        public IResult Delete(Color entity)
+        {
+            _colorService.Delete(entity);
+            return new SuccessResult();
+        }
+
+        public IDataResult<List<Color>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(Color brand)
+        public IDataResult<Color> GetById(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public List<Color> GetAll()
+        public IResult Update(Color entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Color GetById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Color brand)
-        {
-            throw new NotImplementedException();
-        }
-
-        IResult IBusinessService<Color>.Add(Color brand)
-        {
-            throw new NotImplementedException();
-        }
-
-        IResult IBusinessService<Color>.Delete(Color brand)
-        {
-            throw new NotImplementedException();
-        }
-
-        IDataResult<List<Color>> IBusinessService<Color>.GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        IDataResult<Color> IBusinessService<Color>.GetById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        IResult IBusinessService<Color>.Update(Color brand)
-        {
-            throw new NotImplementedException();
+            _colorService.Update(entity);
+           return new SuccessResult();
         }
     }
 }

@@ -24,7 +24,8 @@ namespace Business.Concrete
 
         public IResult Delete(Customer entity)
         {
-            throw new NotImplementedException();
+            customerDal.Delete(entity);
+            return new SuccessResult();
         }
 
         public IDataResult<List<Customer>> GetAll()
@@ -39,7 +40,8 @@ namespace Business.Concrete
 
         public IResult Update(Customer entity)
         {
-            throw new NotImplementedException();
+            customerDal.Update(entity);
+            return new SuccessResult();
         }
     }
 }
