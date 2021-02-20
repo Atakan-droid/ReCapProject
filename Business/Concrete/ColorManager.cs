@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using CORE.Aspects.Autofac.Validation;
 using CORE.Utilities;
 using Entities.Concrete;
 using System;
@@ -15,6 +17,7 @@ namespace Business.Concrete
             _colorService = colorService;
         }
 
+        [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color entity)
         {
             _colorService.Add(entity);

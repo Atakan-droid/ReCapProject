@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using CORE.Aspects.Autofac.Validation;
 using CORE.Utilities;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -17,6 +19,7 @@ namespace Business.Concrete
         {
             rentalDal = _rentalDal;
         }
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rentals entity)
         {
             if (entity.RentDate == null)
