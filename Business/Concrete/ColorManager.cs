@@ -40,6 +40,11 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
+        public IDataResult<List<Color>> GetDataPhotoId(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IResult Update(Color entity)
         {
             _colorService.Update(entity);

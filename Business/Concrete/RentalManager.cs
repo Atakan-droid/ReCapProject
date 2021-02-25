@@ -52,6 +52,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Rentals>(rentalDal.Get(p=>p.Id==Id),Messages.RentalListedById);
         }
 
+        public IDataResult<List<Rentals>> GetDataPhotoId(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IDataResult<List<Rents_Cars_CustomersDTOs>> GetRentDetail()
         {
             return new SuccessDataResult<List<Rents_Cars_CustomersDTOs>>(rentalDal.GetDetails(),Messages.RentalListed);

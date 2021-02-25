@@ -13,5 +13,6 @@ namespace Business.Abstract
         IResult Add(T entity);
         IResult Delete(T entity);
         IResult Update(T entity);
+        IDataResult<List<T>> GetDataPhotoId(int Id);
     }
 }

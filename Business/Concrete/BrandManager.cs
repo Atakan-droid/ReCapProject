@@ -17,6 +17,12 @@ namespace Business.Concrete
         {
             _brandDal = brandDal;
         }
+
+        public IDataResult<List<Brand>> GetDataPhotoId(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         [ValidationAspect(typeof(BrandValidator))]
         IResult IBusinessService<Brand>.Add(Brand brand)
         {

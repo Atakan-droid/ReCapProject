@@ -53,6 +53,11 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
+        public IDataResult<List<User>> GetDataPhotoId(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IResult Update(User entity)
         {
             userDal.Update(entity);
