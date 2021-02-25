@@ -17,10 +17,10 @@ namespace WebAPI.Controllers
     {
         ICarImageService _carImageService;
         public static IWebHostEnvironment _webHostEnvironment;
-        public CarImagesController(ICarImageService carImageService,IWebHostEnvironment webHostEnvironment)
+        public CarImagesController(ICarImageService carImageService)
         {
             _carImageService = carImageService;
-            _webHostEnvironment = webHostEnvironment;
+            
         }
 
         [HttpPost("add")]

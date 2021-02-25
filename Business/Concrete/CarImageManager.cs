@@ -19,7 +19,7 @@ namespace Business.Concrete
         {
             _carImageDal = carImageDal;
         }
-        public IResult Add(Images images,CarImage entity)
+        public IResult Add(CarImage entity)
         {
             IResult result = BusinessRules.Run(CheckIfCarHaveMoreThan5Images(entity.CarId)
                 ,CheckIfCarImagePathTypeCorrect(entity.ImagePath));
@@ -28,35 +28,24 @@ namespace Business.Concrete
             {
                 return result;
             }
-            var path = "\\images\\";
-            var currentDirectory = Environment.CurrentDirectory + "\\wwwroot";
-            if(images.images!=null && images.images.Length > 0)
-            {
-                string randomName = Guid.NewGuid().ToString();
-                string type = Path.GetExtension(images.images.FileName);
-
-                if (!Directory.Exists(currentDirectory + path))
-                {
-                    Directory.CreateDirectory(currentDirectory + path);
-                }
-
-            }
-
+            string createPath = ImagePath(entity);
+            File.Copy(entity.ImagePath, createPath);
+            entity.ImagePath = createPath;
             entity.Date = DateTime.Now;
             _carImageDal.Add(entity);
-            return new SuccessResult();
+            return new SuccessResult("resim eklendi");
+
         }
 
-        public IResult Add(CarImage entity)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public IResult Delete(CarImage entity)
         {
-           
+
+            var ImageDelete = _carImageDal.Get(p => p.Id == entity.Id);
+            File.Delete(ImageDelete.ImagePath);
             _carImageDal.Delete(entity);
-            return new SuccessResult();
+            return new SuccessResult("Image Deleted");
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -85,9 +74,13 @@ namespace Business.Concrete
             {
                 return result;
             }
-          
+
+            var updatePath = ImagePath(entity);
+            File.Copy(entity.ImagePath, updatePath);
+            File.Delete(entity.ImagePath);
+            entity.ImagePath = updatePath;
             _carImageDal.Update(entity);
-            return new SuccessResult();
+            return new SuccessResult("Image updated...");
         }
         private IResult CheckIfCarHaveMoreThan5Images(int image)
         {
@@ -118,6 +111,11 @@ namespace Business.Concrete
                 return new ErrorResult("Hatalı form");
             }
             return new SuccessResult();
+        }
+        private string ImagePath(CarImage entity)
+        {
+            string namePathRule = "CarImages-" + entity.CarId + "-" + DateTime.Now;
+            return AppDomain.CurrentDomain.BaseDirectory + "Images\\" + namePathRule + ".jpg";
         }
     }
 }
