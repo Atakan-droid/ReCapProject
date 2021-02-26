@@ -16,27 +16,36 @@ namespace WebAPI.Controllers
     public class CarImagesController : ControllerBase
     {
         ICarImageService _carImageService;
-        public static IWebHostEnvironment _webHostEnvironment;
-        public CarImagesController(ICarImageService carImageService)
+        IWebHostEnvironment _webHostEnvironment;
+        public CarImagesController(ICarImageService carImageService,IWebHostEnvironment webHostEnvironment)
         {
             _carImageService = carImageService;
+            _webHostEnvironment = webHostEnvironment;
             
         }
 
         [HttpPost("add")]
-        public IActionResult Add(CarImage carImage)
+        public async Task<IActionResult> AddAsync([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
         {
+            System.IO.FileInfo ff = new System.IO.FileInfo(file.FileName);
+            string fileExtension = ff.Extension;
 
-            var result = _carImageService.Add(carImage);
+            var path = Path.GetTempFileName();
+            if (file.Length > 0)
+                using (var stream = new FileStream(path, FileMode.Create))
+                    await file.CopyToAsync(stream);
 
+            var carimage = new CarImage { CarId = carImage.CarId, ImagePath = path, Date = DateTime.Now };
+
+
+            var result = _carImageService.Add2(carimage, fileExtension);
 
             if (result.Success)
             {
-                return Ok();
+                return Ok(result);
             }
-            return BadRequest(result.Message);
 
-            
+            return BadRequest(result);
         }
         [HttpGet("getall")]
         public IActionResult GetAll()
