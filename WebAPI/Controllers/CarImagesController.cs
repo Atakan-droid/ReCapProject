@@ -25,27 +25,42 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddAsync([FromForm(Name = ("Image"))] IFormFile file, [FromForm] CarImage carImage)
+        public IActionResult Add([FromForm(Name =("Image"))] IFormFile file,[FromForm] CarImage carImage)
         {
-            System.IO.FileInfo ff = new System.IO.FileInfo(file.FileName);
-            string fileExtension = ff.Extension;
-
-            var path = Path.GetTempFileName();
-            if (file.Length > 0)
-                using (var stream = new FileStream(path, FileMode.Create))
-                    await file.CopyToAsync(stream);
-
-            var carimage = new CarImage { CarId = carImage.CarId, ImagePath = path, Date = DateTime.Now };
-
-
-            var result = _carImageService.Add2(carimage, fileExtension);
-
+            var result = _carImageService.Add2(file, carImage);
             if (result.Success)
             {
                 return Ok(result);
             }
-
             return BadRequest(result);
+        }
+        [HttpPost("testupload")]
+        public string Post([FromForm(Name =("Image"))] IFormFile file)
+        {
+            try
+            {
+                if (file.Length > 0)
+                {
+                    string path = _webHostEnvironment.WebRootPath + "\\uploads\\";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    using (FileStream fileStream=System.IO.File.Create(path+file.FileName))
+                    {
+                        file.CopyTo(fileStream);
+                        fileStream.Flush();
+                        return "Updated";
+                    }
+                }
+                else
+                {
+                    return "Not Uploaded";
+                }
+            }catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
         [HttpGet("getall")]
         public IActionResult GetAll()
@@ -53,7 +68,7 @@ namespace WebAPI.Controllers
             var result = _carImageService.GetAll();
             if (result.Success)
             {
-                return Ok();
+                return Ok(result.Data);
             }
             return BadRequest(result.Message);
         }
@@ -63,7 +78,7 @@ namespace WebAPI.Controllers
             var result = _carImageService.Update(carImage);
             if (result.Success)
             {
-                return Ok();
+                return Ok(result);
             }
             return BadRequest(result.Message);
         }
@@ -73,7 +88,7 @@ namespace WebAPI.Controllers
             var result = _carImageService.Delete(carImage);
             if (result.Success)
             {
-                return Ok();
+                return Ok(result);
             }
             return BadRequest(result.Message);
         }

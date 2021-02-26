@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
 using CORE.Utilities;
 using CORE.Utilities.BusinessRules;
+using CORE.Utilities.FileHelper;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +27,7 @@ namespace Business.Concrete
             IResult result = BusinessRules.Run(CheckIfCarHaveMoreThan5Images(entity.CarId)
                 ,CheckIfCarImagePathTypeCorrect(entity.ImagePath));
 
+
             if (result!=null)
             {
                 return result;
@@ -34,7 +37,7 @@ namespace Business.Concrete
 
         }
 
-        public IResult Add2(CarImage carImage, string extension)
+        public IResult Add2(IFormFile file,CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarHaveMoreThan5Images(carImage.CarId)
                , CheckIfCarImagePathTypeCorrect(carImage.ImagePath));
@@ -43,14 +46,15 @@ namespace Business.Concrete
             {
                 return result;
             }
-            var addedCarImage = CreatedFile(carImage, extension).Data;
-            _carImageDal.Add(addedCarImage);
+            carImage.ImagePath = Filehelper.AddAsync(file);
+            carImage.Date = DateTime.Now;
+            _carImageDal.Add(carImage);
             return new SuccessResult();
         }
 
         public IResult Delete(CarImage entity)
         {
-            IResult result = BusinessRules.Run(CarImageDelete(entity));
+            IResult result = BusinessRules.Run();
             if (result != null)
             {
                 return result;
@@ -86,7 +90,7 @@ namespace Business.Concrete
                 return result;
             }
 
-            var carImageUpdate = UpdatedFile(entity).Data;
+           
             _carImageDal.Update(entity);
             return new SuccessResult("Image updated...");
         }
@@ -120,58 +124,8 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
-        private string ImagePath(CarImage entity)
-        {
-            string namePathRule = "CarImages-" + entity.CarId + "-" + DateTime.Now;
-            return AppDomain.CurrentDomain.BaseDirectory + "Images\\" + namePathRule + ".jpg";
-        }
-        private IDataResult<CarImage> CreatedFile(CarImage carImage,string extension)
-        {            
-
-            string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\Images");           
-
-            var creatingUniqueFilename = Guid.NewGuid().ToString("N")
-                + "_" + DateTime.Now.Month + "_"
-                + DateTime.Now.Day + "_"
-                + DateTime.Now.Year + extension;
-
-            string source = Path.Combine(carImage.ImagePath);
-
-            string result = $@"{path}\{creatingUniqueFilename}";
-
-           File.Move(source, path + @"\" + creatingUniqueFilename);
-           
+       
         
-            return new SuccessDataResult<CarImage>(new CarImage { Id = carImage.Id, CarId = carImage.CarId, ImagePath = result, Date = DateTime.Now }, "Image added");
-        }
-        private IDataResult<CarImage> UpdatedFile(CarImage carImage)
-        {
-            var creatingUniqueFilename = Guid.NewGuid().ToString("N") + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + ".jpeg";
-
-            string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\Images");
-
-            string result = $"{path}\\{creatingUniqueFilename}";
-
-            File.Copy(carImage.ImagePath, path + "\\" + creatingUniqueFilename);
-
-            File.Delete(carImage.ImagePath);
-
-            return new SuccessDataResult<CarImage>(new CarImage { Id = carImage.Id, CarId = carImage.CarId, ImagePath = result, Date = DateTime.Now });
-        }
-        private IResult CarImageDelete(CarImage carImage)
-        {
-            try
-            {
-                File.Delete(carImage.ImagePath);
-            }
-            catch (Exception exception)
-            {
-
-                return new ErrorResult(exception.Message);
-            }
-
-            return new SuccessResult();
-        }
 
     }
 }
