@@ -2,9 +2,9 @@
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using CORE.Aspects.Autofac.Validation;
+using CORE.Entities.Concrete;
 using CORE.Utilities;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -19,17 +19,13 @@ namespace Business.Concrete
         {
             userDal = _userDal;
         }
-        [ValidationAspect(typeof(UserValidator))]
+        
         public IResult Add(User entity)
         {
-            if (entity.Password.Length <= 6) { return new ErrorResult(Messages.NewUserErrorPassword); } 
-            else
-            {
-                userDal.Add(entity);
-                         return new ErrorResult("Başarılı oluşturma");
-            }
 
-           
+            userDal.Add(entity);
+            return new SuccessResult();
+
         }
 
         public IResult Delete(User entity)
@@ -43,14 +39,19 @@ namespace Business.Concrete
             return new SuccessDataResult<List<User>>(userDal.GetAll(),"Tüm kullanıcılar listelendi");
         }
 
-        public IDataResult<List<User_CustomerDTOs>> GetAllDetails()
+        public User GetByEmail(string email)
         {
-            return new SuccessDataResult<List<User_CustomerDTOs>>(userDal.GetAllUserInformation(), Messages.AllUsersListed);
+            return userDal.Get(u => u.Email == email);
         }
 
         public IDataResult<User> GetById(int Id)
         {
             throw new NotImplementedException();
+        }
+
+        public IDataResult<List<OperationClaim>> GetClaim(User user)
+        {
+            return new SuccessDataResult<List<OperationClaim>>(userDal.GetClaims(user));
         }
 
         public IDataResult<List<User>> GetDataPhotoId(int Id)

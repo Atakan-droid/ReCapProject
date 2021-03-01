@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
             using (CarRentContext carRent= new CarRentContext())
             {
                 var result = from c in carRent.Customers
-                             join u in carRent.User
+                             join u in carRent.Users
                              on c.UserId equals u.Id
                              join r in carRent.Rentals on c.Id equals r.CustomerId
                              join car in carRent.Car on r.CarId equals car.Id

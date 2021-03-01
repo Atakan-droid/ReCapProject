@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using CORE.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
@@ -47,33 +48,8 @@ namespace ConsoleUI
             }
         }
 
-        private static void NewUserAdded(UserManager userManager)
-        {
-            User user1 = new User() { Id = 6, FirstName = "Hasan", LastName = "Mustan", Email = "hasan@gmail.com", Password = "123" };
-
-            var result4 = userManager.Add(user1);
-            if (result4.Success == true)
-            {
-                Console.WriteLine(result4.Message);
-            }
-            else
-            {
-                Console.WriteLine(result4.Message);
-            }
-        }
-
-        private static void UsersListed(UserManager userManager)
-        {
-            var result = userManager.GetAllDetails();
-            if (result.Success == true)
-            {
-                foreach (var users in result.Data)
-                {
-                    Console.WriteLine(users.UserName + " " + users.UserLastName + " " + users.UserEmail + " mailine sahip" + " " + users.UserCompanyName + " şiketinde çalışıyor");
-                }
-            }
-        }
-
+       
+       
         private static void CustomersListed(CustomerManager customerManager)
         {
             Console.WriteLine("--------------Müşteriler listelniyor----------------");

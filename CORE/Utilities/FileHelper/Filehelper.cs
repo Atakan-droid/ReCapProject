@@ -58,8 +58,11 @@ namespace CORE.Utilities.FileHelper
                + DateTime.Now.Day + "_"
                + DateTime.Now.Year + fileExtension;
 
-            string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\Images");
-
+            string path = System.IO.Directory.GetCurrentDirectory() + @"/wwwroot/Images";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
             string result = $@"{path}\{creatingUniqueFilename}";
 
             return result;

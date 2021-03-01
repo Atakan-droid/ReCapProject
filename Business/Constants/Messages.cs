@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CORE.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,7 +21,17 @@ namespace Business.Constants
         public static string RentalListed = "Başarılı bir şekilde listelendi";
         public static string RentalListedById = "Id ye göre listelendi";
         public static string RentalBackSuccess = "Başarılı bir şekilde teslim edildi";
-        
 
+        public static string UserNotFound = "Kullanıcı Bulunamadı";
+
+        public static string PasswordError = "Şifre Hatalı";
+
+        public static string SuccesfulLogin = "Sisteme Giriş başarılı";
+
+        public static string UserAlreadyExists = "Bu kullanıcı zaten Mevcut";
+
+        public static string UserRegistered = "Kullanıcı Başarıyla Kaydedildi";
+
+        public static string AccessTokenCreated = "Token Oluşturuldu";
     }
 }

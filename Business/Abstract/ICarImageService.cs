@@ -10,5 +10,7 @@ namespace Business.Abstract
    public interface ICarImageService:IBusinessService<CarImage>
     {
         IResult Add2(IFormFile file, CarImage carImage);
+        IResult Update2(IFormFile file, CarImage carImage);
+        IResult Delete2(IFormFile file, CarImage carImage);
     }
 }

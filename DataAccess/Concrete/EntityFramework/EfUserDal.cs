@@ -1,32 +1,32 @@
 ﻿using CORE.DataAccess;
 using CORE.DataAccess.EntityFramework;
 using DataAccess.Abstract;
-using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using CORE.Entities.Concrete;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.EntityFramework
 {
     public class EfUserDal : EfEntityRepositoryBase<User, CarRentContext>, IUserDal
     {
-        public List<User_CustomerDTOs> GetAllUserInformation()
+       
+        public List<OperationClaim> GetClaims(User user)
         {
-            using (CarRentContext userDetail = new CarRentContext())
+            using (var context = new CarRentContext())
             {
-                var result = from u in userDetail.User
-                             join
-                             c in userDetail.Customers on
-                             u.Id equals c.UserId
-                             select new User_CustomerDTOs 
-                             { Id = u.Id, UserName = u.FirstName, UserLastName = u.LastName, UserEmail = u.Email, UserPassword = u.Password,UserCompanyName=c.CompanyName };
-                              
-
+                var result = from operationClaim in context.OperationClaims
+                             join userOperationClaim in context.UserOperationClaims
+                             on operationClaim.Id equals userOperationClaim.OperationClaimId
+                             where userOperationClaim.UserId == user.Id
+                             select new OperationClaim() {Id=operationClaim.Id,Name=operationClaim.Name };
                 return result.ToList();
-                              
             }
         }
+
+     
     }
 }

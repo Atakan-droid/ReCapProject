@@ -63,6 +63,21 @@ namespace Business.Concrete
             return new SuccessResult("Image Deleted");
         }
 
+        public IResult Delete2(IFormFile file, CarImage carImage)
+        {
+            var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.Id == carImage.Id).ImagePath;
+
+            IResult result = BusinessRules.Run();
+
+            if (result != null)
+            {
+                return result;
+            }
+            Filehelper.DeleteAsync(oldpath);
+            _carImageDal.Delete(carImage);
+            return new SuccessResult();
+        }
+
         public IDataResult<List<CarImage>> GetAll()
         {
             
@@ -94,6 +109,17 @@ namespace Business.Concrete
             _carImageDal.Update(entity);
             return new SuccessResult("Image updated...");
         }
+
+        public IResult Update2(IFormFile file, CarImage carImage)
+        {
+            var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.Id == carImage.Id).ImagePath;
+            carImage.ImagePath = Filehelper.UpdateAsync(oldpath, file);
+            carImage.Date = DateTime.Now;
+            _carImageDal.Update(carImage);
+            return new SuccessResult();
+
+        }
+
         private IResult CheckIfCarHaveMoreThan5Images(int image)
         {
             var result = _carImageDal.GetAll(p=>p.CarId==image).Count;

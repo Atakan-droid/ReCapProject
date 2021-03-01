@@ -1,6 +1,5 @@
-﻿using CORE.Utilities;
-using Entities.Concrete;
-using Entities.DTOs;
+﻿using CORE.Entities.Concrete;
+using CORE.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +8,7 @@ namespace Business.Abstract
 {
    public interface IUserService:IBusinessService<User>
     {
-        IDataResult<List<User_CustomerDTOs>> GetAllDetails();
+       IDataResult<List<OperationClaim>> GetClaim(User user);
+        User GetByEmail(string email);
     }
 }
