@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using CORE.Aspects.Autofac.Validation;
@@ -59,6 +60,7 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
+        [SecuredOperation("user,admin")]
         public IResult Update(User entity)
         {
             userDal.Update(entity);

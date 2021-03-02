@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using CORE.Aspects.Autofac.Validation;
@@ -19,6 +20,7 @@ namespace Business.Concrete
         {
             rentalDal = _rentalDal;
         }
+        [SecuredOperation("user,admin")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rentals entity)
         {
@@ -34,6 +36,7 @@ namespace Business.Concrete
            
         }
 
+        [SecuredOperation("user,admin")]
         public IResult Delete(Rentals entity)
         {
 
@@ -42,11 +45,13 @@ namespace Business.Concrete
            
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<Rentals>> GetAll()
         {
             return new SuccessDataResult<List<Rentals>>(rentalDal.GetAll(),Messages.RentalListed);
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<Rentals> GetById(int Id)
         {
             return new SuccessDataResult<Rentals>(rentalDal.Get(p=>p.Id==Id),Messages.RentalListedById);
@@ -62,6 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rents_Cars_CustomersDTOs>>(rentalDal.GetDetails(),Messages.RentalListed);
         }
 
+        [SecuredOperation("user,admin")]
         public IResult RentalBack (int Id)
         {
             var result = rentalDal.Get(p => p.Id==Id);
@@ -70,6 +76,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalBackSuccess);
         }
 
+        [SecuredOperation("admin")]
         public IResult Update(Rentals entity)
         {
             if (entity.ReturnDate == null)

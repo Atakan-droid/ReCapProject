@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using CORE.Utilities;
 using CORE.Utilities.BusinessRules;
 using CORE.Utilities.FileHelper;
@@ -22,6 +23,7 @@ namespace Business.Concrete
             _carImageDal = carImageDal;
         }
 
+        [SecuredOperation("admin")]
         public IResult Add(CarImage entity)
         {
             IResult result = BusinessRules.Run(CheckIfCarHaveMoreThan5Images(entity.CarId)
@@ -37,6 +39,7 @@ namespace Business.Concrete
 
         }
 
+        [SecuredOperation("admin")]
         public IResult Add2(IFormFile file,CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarHaveMoreThan5Images(carImage.CarId)
@@ -52,6 +55,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete(CarImage entity)
         {
             IResult result = BusinessRules.Run();
@@ -63,6 +67,7 @@ namespace Business.Concrete
             return new SuccessResult("Image Deleted");
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete2(IFormFile file, CarImage carImage)
         {
             var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.Id == carImage.Id).ImagePath;
@@ -78,17 +83,20 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<CarImage>> GetAll()
         {
             
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(),"Hepsi geldi");
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<CarImage> GetById(int Id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == Id), "Başarılı");
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<CarImage>> GetDataPhotoId(int Id)
         {
            
@@ -97,6 +105,7 @@ namespace Business.Concrete
 
         }
 
+        [SecuredOperation("admin")]
         public IResult Update(CarImage entity)
         {
             IResult result = BusinessRules.Run(CheckIfCarHaveMoreThan5Images(entity.CarId));
@@ -110,6 +119,7 @@ namespace Business.Concrete
             return new SuccessResult("Image updated...");
         }
 
+        [SecuredOperation("admin")]
         public IResult Update2(IFormFile file, CarImage carImage)
         {
             var oldpath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..\\..\\..\\wwwroot")) + _carImageDal.Get(p => p.Id == carImage.Id).ImagePath;

@@ -33,6 +33,7 @@ namespace Business.Concrete
            
         }
 
+        [SecuredOperation("admin")]
         public IResult Delete(Car car)
         {
             if (car.Id==0)
@@ -47,22 +48,26 @@ namespace Business.Concrete
             };
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<Car>> GetAll()
         {
             
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(),"Başarıyla Listelendi");
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<Car>> GetAllByBrandId(int id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id),Messages.IdyeGore);
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<Car>> GetAllByColorId(int id)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == id),"Renge göre Idler");
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<CarDTOs>> GetAllDetails()
         {
             if (DateTime.Now.Hour == 21) { return new ErrorDataResult<List<CarDTOs>>(_carDal.GetAllDetails(), "Hatalı liste"); };
@@ -70,16 +75,19 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDTOs>>(_carDal.GetAllDetails(),"Tüm detaylar listlendi");
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<Car> GetById(int Id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(p=>p.Id==Id));
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<Car>> GetDataPhotoId(int Id)
         {
             throw new NotImplementedException();
         }
 
+        [SecuredOperation("admin")]
         public IResult Update(Car car)
         {
             if (car.ModelYear > 2021)

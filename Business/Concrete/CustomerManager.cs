@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using CORE.Aspects.Autofac.Validation;
@@ -31,6 +32,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [SecuredOperation("user,admin")]
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(customerDal.GetAll(),Messages.CustomersListed);
