@@ -2,6 +2,8 @@
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using CORE.Aspects.Autofac.Performance;
+using CORE.Aspects.Autofac.Transaction;
 using CORE.Aspects.Autofac.Validation;
 using CORE.CrossCuttingConcerns.Validation;
 using CORE.Utilities;
@@ -25,12 +27,25 @@ namespace Business.Concrete
         }
 
         [SecuredOperation("admin")]
+        [PerformanceAspect(5)]
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
                 _carDal.Add(car);
                 return new SuccessResult();
            
+        }
+
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Car car)
+        {
+            Add(car);
+            if (car.DailyPrice<10)
+            {
+                throw new Exception("");
+            }
+            Add(car);
+            return null;
         }
 
         [SecuredOperation("admin")]
@@ -47,7 +62,7 @@ namespace Business.Concrete
                 return new SuccessResult("Araç Silindi");
             };
         }
-
+        [PerformanceAspect(5)]
         [SecuredOperation("user,admin")]
         public IDataResult<List<Car>> GetAll()
         {
@@ -60,7 +75,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == id),Messages.IdyeGore);
         }
-
+        [PerformanceAspect(5)]
         [SecuredOperation("user,admin")]
         public IDataResult<List<Car>> GetAllByColorId(int id)
         {

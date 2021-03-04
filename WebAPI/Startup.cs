@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Concrete;
+using CORE.DependecyResolvers;
+using CORE.Extensions;
 using CORE.Utilities.IoC;
 using CORE.Utilities.Security.Encryption;
 using CORE.Utilities.Security.JWT;
@@ -54,8 +56,11 @@ namespace WebAPI
 
                     };
                 });
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            ServiceTool.Create(services);
+
+            //   ServiceTool.Create(services);
+            services.AddDependecyResolvers(new ICoreModule[] {
+                new CoreModule()
+            });
                 
         }
 
