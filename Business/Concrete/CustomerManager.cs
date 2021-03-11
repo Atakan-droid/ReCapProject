@@ -32,7 +32,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [SecuredOperation("user,admin")]
+       // [SecuredOperation("user,admin")]
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(customerDal.GetAll(),Messages.CustomersListed);

@@ -26,9 +26,9 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        [SecuredOperation("admin")]
+       // [SecuredOperation("admin")]
         [PerformanceAspect(5)]
-        [ValidationAspect(typeof(CarValidator))]
+       [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
                 _carDal.Add(car);
@@ -62,8 +62,8 @@ namespace Business.Concrete
                 return new SuccessResult("Araç Silindi");
             };
         }
-        [PerformanceAspect(5)]
-        [SecuredOperation("user,admin")]
+       // [PerformanceAspect(5)]
+       // [SecuredOperation("user,admin")]
         public IDataResult<List<Car>> GetAll()
         {
             
@@ -82,10 +82,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == id),"Renge göre Idler");
         }
 
-        [SecuredOperation("user,admin")]
+       // [SecuredOperation("user,admin")]
         public IDataResult<List<CarDTOs>> GetAllDetails()
         {
-            if (DateTime.Now.Hour == 21) { return new ErrorDataResult<List<CarDTOs>>(_carDal.GetAllDetails(), "Hatalı liste"); };
+           
 
             return new SuccessDataResult<List<CarDTOs>>(_carDal.GetAllDetails(),"Tüm detaylar listlendi");
         }

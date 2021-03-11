@@ -24,35 +24,35 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        [ValidationAspect(typeof(BrandValidator))]
-        IResult IBusinessService<Brand>.Add(Brand brand)
+       // [ValidationAspect(typeof(BrandValidator))]
+        public IResult Add(Brand brand)
         {
             _brandDal.Add(brand);
             return new SuccessResult();
         }
         [SecuredOperation("admin")]
-        IResult IBusinessService<Brand>.Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
             return new SuccessResult();
         }
 
-        [SecuredOperation("user,admin")]
-        IDataResult<List<Brand>> IBusinessService<Brand>.GetAll()
+       // [SecuredOperation("user,admin")]
+        public IDataResult<List<Brand>> GetAll()
         {
 
             return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),"Tüm Brand'lar getirildi");
         }
 
         [SecuredOperation("user,admin")]
-        IDataResult<Brand> IBusinessService<Brand>.GetById(int Id)
+        public IDataResult<Brand> GetById(int Id)
         {
             
             return new SuccessDataResult<Brand>(_brandDal.Get(p => p.Id == Id),"Id ye göre getirildi");
         }
 
         [SecuredOperation("admin")]
-        IResult IBusinessService<Brand>.Update(Brand brand)
+        public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
             return new SuccessResult();

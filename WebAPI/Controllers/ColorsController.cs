@@ -19,11 +19,17 @@ namespace WebAPI.Controllers
             _colorService = colorService;
         }
 
-        [HttpGet("add")]
+        [HttpPost("add")]
         public IActionResult Add(Color color)
         {
             var result = _colorService.Add(color);
-            return Ok(result.Message);
+            return Ok(result);
+        }
+        [HttpGet("getcolors")]
+        public IActionResult GetColors()
+        {
+            var result = _colorService.GetAll();
+            return Ok(result);
         }
     }
 }

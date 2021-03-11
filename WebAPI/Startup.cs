@@ -25,7 +25,8 @@ using Microsoft.Extensions.Logging;
 namespace WebAPI
 {
     public class Startup
-    {
+    { 
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,15 +34,23 @@ namespace WebAPI
 
         public IConfiguration Configuration { get; }
 
+       
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:3000"
+                                                          ).AllowAnyHeader()
+                                                  .AllowAnyMethod(); ;
+                                  });
+            });
             services.AddControllers();
-            
-            services.AddCors(options => 
-            options.AddDefaultPolicy(
-                builder=>builder.AllowAnyOrigin()
-                ));
+           
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
             services.AddAuthentication(
                 JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
@@ -61,7 +70,7 @@ namespace WebAPI
             services.AddDependecyResolvers(new ICoreModule[] {
                 new CoreModule()
             });
-                
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,12 +80,12 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseStaticFiles();
-            app.UseCors();
+            
             app.UseAuthentication();
 
             app.UseAuthorization();

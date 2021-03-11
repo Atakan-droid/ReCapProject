@@ -3,6 +3,7 @@ using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using CORE.Aspects.Autofac.Validation;
 using CORE.Utilities;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,14 @@ namespace Business.Concrete
 {
     public class ColorManager :IColorService
     {
-        IColorService _colorService;
-        public ColorManager(IColorService colorService)
+        IColorDal _colorService;
+        public ColorManager(IColorDal colorService)
         {
             _colorService = colorService;
         }
 
-        [SecuredOperation("admin")]
-        [ValidationAspect(typeof(ColorValidator))]
+       // [SecuredOperation("admin")]
+       // [ValidationAspect(typeof(ColorValidator))]
         public IResult Add(Color entity)
         {
             _colorService.Add(entity);
@@ -33,10 +34,10 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [SecuredOperation("user,admin")]
+       // [SecuredOperation("user,admin")]
         public IDataResult<List<Color>> GetAll()
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<List<Color>>(_colorService.GetAll(),"Başarılı");
         }
 
         [SecuredOperation("user,admin")]
