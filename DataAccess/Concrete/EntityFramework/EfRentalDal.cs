@@ -20,7 +20,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join u in carRent.Users
                              on c.UserId equals u.Id
                              join r in carRent.Rentals on c.Id equals r.CustomerId
-                             join car in carRent.Car on r.CarId equals car.Id
+                             join car in carRent.Car on r.CarId equals car.Id 
                              select new Rents_Cars_CustomersDTOs {Id=r.Id,CarName=car.Description,CustomerName=u.FirstName,RentDate=r.RentDate };
 
                 return result.ToList();

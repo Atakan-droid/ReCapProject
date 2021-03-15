@@ -57,7 +57,22 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
+        public List<CarDTOs> GetAllDetails(int i)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<CarDTOs> GetAllDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDTOs> GetAllDetailsByBrand(int brandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDTOs> GetAllDetailsByColor(int colorId)
         {
             throw new NotImplementedException();
         }
@@ -65,6 +80,11 @@ namespace DataAccess.Concrete.InMemory
         public List<Car> GetById(int carId)
         {
             return _cars.Where(c => c.Id==carId).ToList();
+        }
+
+        public List<CarDTOs> GetDetail(int carId)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Car car)

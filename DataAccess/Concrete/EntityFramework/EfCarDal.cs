@@ -19,8 +19,52 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = from c in carRent.Car
                              join color in carRent.Color on c.ColorId equals color.Id
-                             join b in carRent.Brand on c.BrandId equals b.Id
+                             join b in carRent.Brand on c.BrandId equals b.Id 
                              select new CarDTOs {Id=c.Id,BrandName=b.BrandName,ColorName=color.ColorName,Description=c.Description,DailyPrice=c.DailyPrice,ModelYear=c.ModelYear };
+
+                return result.ToList();
+            }
+        }
+
+        public List<CarDTOs> GetAllDetailsByBrand(int brandId)
+        {
+            using (CarRentContext carRent = new CarRentContext())
+            {
+                var result = from c in carRent.Car
+                             join color in carRent.Color on c.ColorId equals color.Id
+                             join b in carRent.Brand on c.BrandId equals b.Id 
+                             where c.BrandId==brandId
+                             select new CarDTOs { Id = c.Id, BrandName = b.BrandName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, ModelYear = c.ModelYear };
+
+                return result.ToList();
+            }
+        }
+
+        public List<CarDTOs> GetAllDetailsByColor(int colorId)
+        {
+            using (CarRentContext carRent = new CarRentContext())
+            {
+                var result = from c in carRent.Car
+                             join color in carRent.Color on c.ColorId equals color.Id
+                             join b in carRent.Brand on c.BrandId equals b.Id
+                             
+                             where c.ColorId == colorId
+                             select new CarDTOs { Id = c.Id, BrandName = b.BrandName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, ModelYear = c.ModelYear};
+
+                return result.ToList();
+            }
+        }
+
+        public List<CarDTOs> GetDetail(int carId)
+        {
+            using (CarRentContext carRent = new CarRentContext())
+            {
+                var result = from c in carRent.Car
+                             join color in carRent.Color on c.ColorId equals color.Id
+                             join b in carRent.Brand on c.BrandId equals b.Id
+                             
+                             where c.Id == carId
+                             select new CarDTOs { Id = c.Id, BrandName = b.BrandName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, ModelYear = c.ModelYear};
 
                 return result.ToList();
             }

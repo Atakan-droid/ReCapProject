@@ -90,7 +90,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDTOs>>(_carDal.GetAllDetails(),"Tüm detaylar listlendi");
         }
 
-        [SecuredOperation("user,admin")]
+        public IDataResult<List<CarDTOs>> GetAllDetailsByBrand(int brandId)
+        {
+            return new SuccessDataResult<List<CarDTOs>>(_carDal.GetAllDetailsByBrand(brandId), "Tüm detaylar listlendi");
+        }
+
+        public IDataResult<List<CarDTOs>> GetAllDetailsByColor(int colorId)
+        {
+            return new SuccessDataResult<List<CarDTOs>>(_carDal.GetAllDetailsByColor(colorId), "Tüm detaylar listlendi");
+        }
+
+       // [SecuredOperation("user,admin")]
         public IDataResult<Car> GetById(int Id)
         {
             return new SuccessDataResult<Car>(_carDal.Get(p=>p.Id==Id));
@@ -100,6 +110,11 @@ namespace Business.Concrete
         public IDataResult<List<Car>> GetDataPhotoId(int Id)
         {
             throw new NotImplementedException();
+        }
+
+        public IDataResult<List<CarDTOs>> GetDetail(int carId)
+        {
+            return new SuccessDataResult<List<CarDTOs>>(_carDal.GetDetail(carId), "Tek araç listlendi");
         }
 
         [SecuredOperation("admin")]

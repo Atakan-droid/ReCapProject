@@ -39,7 +39,7 @@ namespace Business.Concrete
 
         }
 
-        [SecuredOperation("admin")]
+       // [SecuredOperation("admin")]
         public IResult Add2(IFormFile file,CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarHaveMoreThan5Images(carImage.CarId)
@@ -83,20 +83,20 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [SecuredOperation("user,admin")]
+        //[SecuredOperation("user,admin")]
         public IDataResult<List<CarImage>> GetAll()
         {
             
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(),"Hepsi geldi");
         }
 
-        [SecuredOperation("user,admin")]
+       // [SecuredOperation("user,admin")]
         public IDataResult<CarImage> GetById(int Id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == Id), "Başarılı");
         }
 
-        [SecuredOperation("user,admin")]
+       // [SecuredOperation("user,admin")]
         public IDataResult<List<CarImage>> GetDataPhotoId(int Id)
         {
            
