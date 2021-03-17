@@ -8,6 +8,7 @@ namespace CORE.Utilities.FileHelper
 {
    public class Filehelper
     {
+        
         public static string AddAsync(IFormFile file)
         {
 
@@ -17,16 +18,26 @@ namespace CORE.Utilities.FileHelper
                     file.CopyTo(stream);
 
 
-            var result = newPath(file);
+            var newGuidName = newGuid(file);
 
-            File.Move(sourcepath, result);
+            var imagePathResult = newPath(newGuidName);
+
+            File.Move(sourcepath, imagePathResult);
+
+            var result = newPathForImage(newGuidName);
 
             return result;
         }
 
         public static string UpdateAsync(string sourcePath, IFormFile file)
         {
-            var result = newPath(file);
+            var newGuidName = newGuid(file);
+
+            var imagePathResult = newPath(newGuidName);
+
+            File.Move(sourcePath, imagePathResult);
+
+            var result = newPathForImage(newGuidName);
 
             //File.Copy(sourcePath,result);
 
@@ -48,7 +59,30 @@ namespace CORE.Utilities.FileHelper
             File.Delete(path);
         }
 
-        public static string newPath(IFormFile file)
+        public static string newPath(string guid)
+        {
+
+            string path = @"wwwroot/Images";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string result = $@"{path}\{guid}";
+
+            return result;
+        }
+        public static string newPathForImage(string guid)
+        {
+            string path = @"Images";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            string result = $@"{path}\{guid}";
+
+            return result;
+        }
+        public static string newGuid(IFormFile file)
         {
             System.IO.FileInfo ff = new System.IO.FileInfo(file.FileName);
             string fileExtension = ff.Extension;
@@ -57,17 +91,10 @@ namespace CORE.Utilities.FileHelper
                + "_" + DateTime.Now.Month + "_"
                + DateTime.Now.Day + "_"
                + DateTime.Now.Year + fileExtension;
-
-            string path = System.IO.Directory.GetCurrentDirectory() + @"/wwwroot/Images";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            string result = $@"{path}\{creatingUniqueFilename}";
-
-            return result;
+            return creatingUniqueFilename;
         }
 
-    
-}
+
+
+    }
 }

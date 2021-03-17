@@ -62,6 +62,17 @@ namespace WebAPI.Controllers
                 return ex.Message;
             }
         }
+        [HttpGet("getbycarid")]
+        public IActionResult GetAll(int carId)
+        {
+            var result = _carImageService.GetByCarId(carId);
+         
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result.Message);
+        }
         [HttpGet("getall")]
         public IActionResult GetAll()
         {

@@ -17,9 +17,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentContext carRent=new CarRentContext())
             {
-                var result = from c in carRent.Car
-                             join color in carRent.Color on c.ColorId equals color.Id
-                             join b in carRent.Brand on c.BrandId equals b.Id 
+                var result = from c in carRent.Cars
+                             join color in carRent.Colors on c.BrandId equals color.Id
+                             join b in carRent.Brands on c.BrandId equals b.Id 
                              select new CarDTOs {Id=c.Id,BrandName=b.BrandName,ColorName=color.ColorName,Description=c.Description,DailyPrice=c.DailyPrice,ModelYear=c.ModelYear };
 
                 return result.ToList();
@@ -30,9 +30,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentContext carRent = new CarRentContext())
             {
-                var result = from c in carRent.Car
-                             join color in carRent.Color on c.ColorId equals color.Id
-                             join b in carRent.Brand on c.BrandId equals b.Id 
+                var result = from c in carRent.Cars
+                             join color in carRent.Colors on c.ColorId equals color.Id
+                             join b in carRent.Brands on c.BrandId equals b.Id 
                              where c.BrandId==brandId
                              select new CarDTOs { Id = c.Id, BrandName = b.BrandName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, ModelYear = c.ModelYear };
 
@@ -44,10 +44,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentContext carRent = new CarRentContext())
             {
-                var result = from c in carRent.Car
-                             join color in carRent.Color on c.ColorId equals color.Id
-                             join b in carRent.Brand on c.BrandId equals b.Id
-                             
+                var result = from c in carRent.Cars
+                             join color in carRent.Colors on c.ColorId equals color.Id
+                             join b in carRent.Brands on c.BrandId equals b.Id
                              where c.ColorId == colorId
                              select new CarDTOs { Id = c.Id, BrandName = b.BrandName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, ModelYear = c.ModelYear};
 
@@ -59,9 +58,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentContext carRent = new CarRentContext())
             {
-                var result = from c in carRent.Car
-                             join color in carRent.Color on c.ColorId equals color.Id
-                             join b in carRent.Brand on c.BrandId equals b.Id
+                var result = from c in carRent.Cars
+                             join color in carRent.Colors on c.ColorId equals color.Id
+                             join b in carRent.Brands on c.BrandId equals b.Id
                              
                              where c.Id == carId
                              select new CarDTOs { Id = c.Id, BrandName = b.BrandName, ColorName = color.ColorName, Description = c.Description, DailyPrice = c.DailyPrice, ModelYear = c.ModelYear};

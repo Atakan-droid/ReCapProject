@@ -49,7 +49,8 @@ namespace Business.Concrete
             {
                 return result;
             }
-            carImage.ImagePath = Filehelper.AddAsync(file);
+           
+            carImage.ImagePath =  Filehelper.AddAsync(file);
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
             return new SuccessResult();
@@ -90,7 +91,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(),"Hepsi geldi");
         }
 
-       // [SecuredOperation("user,admin")]
+        public IDataResult<List<CarImage>> GetByCarId(int carId)
+        {
+           return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(p=>p.CarId==carId),"Araç Resimleri Getirildi");
+        }
+
+        // [SecuredOperation("user,admin")]
         public IDataResult<CarImage> GetById(int Id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == Id), "Başarılı");
