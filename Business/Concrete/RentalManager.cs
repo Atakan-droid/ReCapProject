@@ -22,7 +22,7 @@ namespace Business.Concrete
         {
             rentalDal = _rentalDal;
         }
-        [SecuredOperation("user,admin")]
+       // [SecuredOperation("user,admin")]
         [CacheRemoveAspect("IRentalService.Get")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rentals entity)
@@ -36,7 +36,7 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheRemoveAspect("IRentalService.Get")]
-        [SecuredOperation("user,admin")]
+       // [SecuredOperation("user,admin")]
         public IResult Delete(Rentals entity)
         {
 
@@ -46,7 +46,7 @@ namespace Business.Concrete
         }
         [PerformanceAspect(5)]
         [CacheAspect]
-        [SecuredOperation("user,admin")]
+      //  [SecuredOperation("user,admin")]
         public IDataResult<List<Rentals>> GetAll()
         {
             return new SuccessDataResult<List<Rentals>>(rentalDal.GetAll(),Messages.RentalListed);

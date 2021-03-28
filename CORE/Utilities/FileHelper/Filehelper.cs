@@ -62,7 +62,7 @@ namespace CORE.Utilities.FileHelper
         public static string newPath(string guid)
         {
 
-            string path = @"wwwroot/Images";
+            string path = @"wwwroot";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -73,12 +73,8 @@ namespace CORE.Utilities.FileHelper
         }
         public static string newPathForImage(string guid)
         {
-            string path = @"Images";
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-            string result = $@"{path}\{guid}";
+
+            string result = $@"{guid}";
 
             return result;
         }

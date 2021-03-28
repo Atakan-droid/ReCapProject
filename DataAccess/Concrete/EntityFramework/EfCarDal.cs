@@ -20,7 +20,8 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from c in carRent.Cars
                              join color in carRent.Colors on c.BrandId equals color.Id
                              join b in carRent.Brands on c.BrandId equals b.Id 
-                             select new CarDTOs {Id=c.Id,BrandName=b.BrandName,ColorName=color.ColorName,Description=c.Description,DailyPrice=c.DailyPrice,ModelYear=c.ModelYear };
+                             join i in carRent.CarImages on c.Id equals i.CarId
+                             select new CarDTOs {Id=c.Id,BrandName=b.BrandName,ColorName=color.ColorName,Description=c.Description,DailyPrice=c.DailyPrice,ModelYear=c.ModelYear,Images=i.ImagePath };
 
                 return result.ToList();
             }
