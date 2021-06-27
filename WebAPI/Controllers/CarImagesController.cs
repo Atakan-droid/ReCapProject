@@ -34,34 +34,34 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        [HttpPost("testupload")]
-        public string Post([FromForm(Name =("Image"))] IFormFile file)
-        {
-            try
-            {
-                if (file.Length > 0)
-                {
-                    string path = _webHostEnvironment.WebRootPath + "\\uploads\\";
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    using (FileStream fileStream=System.IO.File.Create(path+file.FileName))
-                    {
-                        file.CopyTo(fileStream);
-                        fileStream.Flush();
-                        return "Updated";
-                    }
-                }
-                else
-                {
-                    return "Not Uploaded";
-                }
-            }catch (Exception ex)
-            {
-                return ex.Message;
-            }
-        }
+        //[HttpPost("testupload")]
+        //public string Post([FromForm(Name =("Image"))] IFormFile file)
+        //{
+        //    try
+        //    {
+        //        if (file.Length > 0)
+        //        {
+        //            string path = _webHostEnvironment.WebRootPath + "\\uploads\\";
+        //            if (!Directory.Exists(path))
+        //            {
+        //                Directory.CreateDirectory(path);
+        //            }
+        //            using (FileStream fileStream=System.IO.File.Create(path+file.FileName))
+        //            {
+        //                file.CopyTo(fileStream);
+        //                fileStream.Flush();
+        //                return "Updated";
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return "Not Uploaded";
+        //        }
+        //    }catch (Exception ex)
+        //    {
+        //        return ex.Message;
+        //    }
+        //}
         [HttpGet("getbycarid")]
         public IActionResult GetAll(int carId)
         {

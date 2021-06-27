@@ -35,6 +35,7 @@ namespace CORE.Utilities.Security.JWT
             {
                 Token=token,
                 Expiration=_accessTokenExpiration,
+                user=user.Id
             };
        
         }

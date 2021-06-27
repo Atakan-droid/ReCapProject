@@ -76,6 +76,7 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            
             app.ConfigureCustomExceptionMiddleware();
             app.UseCors("MyPolicy");
             app.UseHttpsRedirection();

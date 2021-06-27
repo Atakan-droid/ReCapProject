@@ -22,7 +22,7 @@ namespace Business.Concrete
         {
             rentalDal = _rentalDal;
         }
-       // [SecuredOperation("user,admin")]
+        [SecuredOperation("user,admin")]
         [CacheRemoveAspect("IRentalService.Get")]
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rentals entity)
